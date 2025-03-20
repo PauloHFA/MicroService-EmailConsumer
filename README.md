@@ -113,7 +113,3 @@ Reprocessamento de mensagens em caso de falha.
 
 Sinta-se à vontade para abrir issues e enviar pull requests para melhorias no projeto!
 
-📄 Licença
-
-Este projeto está sob a licença MIT.
-
