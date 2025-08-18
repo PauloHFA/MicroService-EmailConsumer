@@ -3,7 +3,7 @@ package com.ms.email.models;
 import com.ms.email.enums.StatusEmail;
 import jakarta.annotation.sql.DataSourceDefinition;
 import jakarta.persistence.*;
-import lombok.Data;
+        import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 

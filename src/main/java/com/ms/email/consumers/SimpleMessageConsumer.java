@@ -15,4 +15,3 @@ public class SimpleMessageConsumer {
         System.out.println("Mensagem simples recebida: " + message);
     }
 }
-

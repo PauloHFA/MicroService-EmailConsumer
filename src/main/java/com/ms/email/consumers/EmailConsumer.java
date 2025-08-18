@@ -1,35 +1,35 @@
 package com.ms.email.consumers;
 
 import com.ms.email.dtos.EmailRecordDto;
+import com.ms.email.models.EmailModel;
+import com.ms.email.service.EmailService;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.beans.BeanUtils;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
 @Component
 public class EmailConsumer {
 
-    @RabbitListener(queues = "${broker.queue.email.name}")
-    public void listenEmailQueue(@Payload EmailRecordDto emailRecordDto) {
-        System.out.println("Received email to: " + emailRecordDto.emailTo());
-        System.out.println("Message content: " + emailRecordDto.text());
+    final EmailService emailService;
+
+    public EmailConsumer(EmailService emailService){
+        this.emailService = emailService;
     }
 
-//    @RabbitListener(queues = "${broker.queue.email.name}")
-//    public void debugListener(String rawMessage) {
-//        System.out.println("Raw message received: " + rawMessage);
-//    }
-//
-//    @RabbitListener(queues = "${broker.queue.email.name}")
-//    public void debugByteListener(byte[] rawMessage) {
-//        System.out.println("Mensagem bruta recebida: " + new String(rawMessage));
-//    }
-//
-//    @RabbitListener(queues = "${broker.queue.email.name}")
-//    public void listenWithFallback(Object message) {
-//        if (message instanceof EmailRecordDto emailRecordDto) {
-//            System.out.println("Received email to: " + emailRecordDto.emailTo());
-//        } else {
-//            System.out.println("Received unknown message: " + message);
-//        }
-//    }
+    @RabbitListener(queues = "${broker.queue.email.name}")
+    public void listenEmailQueue(@Payload EmailRecordDto emailRecordDto) {
+        var emailModel = new EmailModel();
+        BeanUtils.copyProperties(emailRecordDto, emailModel);
+        emailService.sendEmail(emailModel);
+
+        /*System.out.println("🚀 Mensagem recebida!");
+        System.out.println("📧 Para: " + emailRecordDto.emailTo());
+        System.out.println("📝 Conteúdo: " + emailRecordDto.text());
+
+        var emailModel = new EmailModel();
+        BeanUtils.copyProperties(emailRecordDto, emailModel);
+    }*/
+
+}
 }
