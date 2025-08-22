@@ -23,14 +23,4 @@ public class RabbitMQConfig {
         rabbitTemplate.setMessageConverter(jackson2JsonMessageConverter());
         return rabbitTemplate;
     }
-
-//    @Bean
-//    public SimpleRabbitListenerContainerFactory rabbitListenerContainerFactory(
-//            ConnectionFactory connectionFactory,
-//            Jackson2JsonMessageConverter converter) {
-//        SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
-//        factory.setConnectionFactory(connectionFactory);
-//        factory.setMessageConverter(converter);
-//        return factory;
-//}
 }

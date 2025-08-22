@@ -7,11 +7,15 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.BeanUtils;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Component
 public class EmailConsumer {
 
-    final EmailService emailService;
+    private static final Logger logger = LoggerFactory.getLogger(EmailConsumer.class);
+
+    private final EmailService emailService;
 
     public EmailConsumer(EmailService emailService){
         this.emailService = emailService;
@@ -19,17 +23,17 @@ public class EmailConsumer {
 
     @RabbitListener(queues = "${broker.queue.email.name}")
     public void listenEmailQueue(@Payload EmailRecordDto emailRecordDto) {
-        var emailModel = new EmailModel();
-        BeanUtils.copyProperties(emailRecordDto, emailModel);
-        emailService.sendEmail(emailModel);
+        try {
+            logger.info("📩 Mensagem recebida da fila: {}", emailRecordDto);
 
-        /*System.out.println("🚀 Mensagem recebida!");
-        System.out.println("📧 Para: " + emailRecordDto.emailTo());
-        System.out.println("📝 Conteúdo: " + emailRecordDto.text());
+            var emailModel = new EmailModel();
+            BeanUtils.copyProperties(emailRecordDto, emailModel);
 
-        var emailModel = new EmailModel();
-        BeanUtils.copyProperties(emailRecordDto, emailModel);
-    }*/
+            emailService.sendEmail(emailModel);
 
-}
+            logger.info("✅ Email enviado com sucesso para: {}", emailModel.getEmailTo());
+        } catch (Exception e) {
+            logger.error("❌ Erro ao processar mensagem da fila: {}", emailRecordDto, e);
+        }
+    }
 }
