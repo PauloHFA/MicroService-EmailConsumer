@@ -39,6 +39,7 @@ public class EmailService {
             logger.debug("Email configurado - From: {}, Date: {}", emailFrom, LocalDateTime.now());
 
             SimpleMailMessage message = new SimpleMailMessage();
+            message.setFrom(emailFrom);
             message.setTo(emailModel.getEmailTo());
             message.setSubject(emailModel.getSubject());
             message.setText(emailModel.getText());
