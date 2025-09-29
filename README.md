@@ -113,3 +113,12 @@ Reprocessamento de mensagens em caso de falha.
 
 Sinta-se à vontade para abrir issues e enviar pull requests para melhorias no projeto!
 
+vamos configurar o Spring para consumir as mensagens do meu microserviço producer atraves do Cloudamqp e rabbit, vamos primeiramente pegar as credenciais da instancia 
+
+<img width="1358" height="749" alt="image" src="https://github.com/user-attachments/assets/af50252d-d258-4dbe-8f42-ac2fbc834059" />
+
+vamos adicionar as credenciais na aplication.propreties da mesma maneira que nos fizemos para configurar o serviço de producer vamos utilizar mesma instancia mesma fila ja criada. 
+
+<img width="933" height="92" alt="image" src="https://github.com/user-attachments/assets/4e9e88c3-138a-4747-bbd4-cf8b6e0cbf57" />
+
+com esta configuração nos ja estamos conectados a nossa intancia e nossa fila, agora falta apenas configurar o metodo de consumer para consumir as mensagens em fila do broker. 
